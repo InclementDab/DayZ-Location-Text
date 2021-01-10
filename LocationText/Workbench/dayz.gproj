@@ -35,7 +35,7 @@ GameProjectClass {
 					Name "core"
 					Paths {
 						"scripts/1_Core"
-						"ModTemplate/scripts/1_Core"
+						"LocationText/scripts/1_Core"
 					}
 					EntryPoint ""
 				}
@@ -50,7 +50,7 @@ GameProjectClass {
 					Name "game"
 					Paths {
 						"scripts/3_Game"
-						"ModTemplate/Scripts/3_Game"
+						"LocationText/Scripts/3_Game"
 					}
 					EntryPoint "CreateGame"
 				}
@@ -58,7 +58,7 @@ GameProjectClass {
 					Name "world"
 					Paths {
 						"scripts/4_World"
-						"ModTemplate/scripts/4_World"
+						"LocationText/scripts/4_World"
 					}
 					EntryPoint ""
 				}
@@ -66,7 +66,7 @@ GameProjectClass {
 					Name "mission"
 					Paths {
 						"scripts/5_Mission"
-						"ModTemplate/scripts/5_Mission"
+						"LocationText/scripts/5_Mission"
 					}
 					EntryPoint "CreateMission"
 				}
@@ -76,7 +76,7 @@ GameProjectClass {
 					Paths {
 						"scripts/editor/Workbench"
 						"scripts/editor/plugins"
-						"ModTemplate/scripts/editor/plugins"
+						"LocationText/scripts/editor/plugins"
 					} 
 					EntryPoint ""
 				} 
