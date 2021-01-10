@@ -15,9 +15,13 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 	
 	private void RunTextCrawl(string town_name, string town_location)
 	{
-		thread TextCrawl("TownName", town_name);
-		Sleep(2000);
-		thread TextCrawl("TownLocation", town_location);
+		TextCrawl("TownName", town_name);
+		Sleep(1000);
+		TextCrawl("TownLocation", town_location);
+		Sleep(5000);
+		TextDestroy("TownName");
+		TextDestroy("TownLocation");
+		Delete();
 	}
 	
 	private void TextCrawl(string property_name, string text)
@@ -27,7 +31,23 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 			text_crawl += text[i];
 			EnScript.SetClassVar(GetTemplateController(), property_name, 0, text_crawl);
 			GetTemplateController().NotifyPropertyChanged(property_name);
-			Sleep(100);
+			EffectSound sound;
+			GetGame().GetPlayer().PlaySoundSet(sound, "LocationText_Click", 0, 0);
+			Sleep(50);
+		}
+	}
+	
+	private void TextDestroy(string property_name)
+	{
+		string text;
+		EnScript.GetClassVar(GetTemplateController(), property_name, 0, text);
+		for (int i = text.Length() - 1; i >= 0; i--) {
+			text[i] = "";
+			EnScript.SetClassVar(GetTemplateController(), property_name, 0, text);
+			GetTemplateController().NotifyPropertyChanged(property_name);
+			EffectSound sound;
+			GetGame().GetPlayer().PlaySoundSet(sound, "LocationText_Click", 0, 0);
+			Sleep(25);
 		}
 	}
 	
@@ -85,7 +105,6 @@ class LocationTextModule: JMModuleBase
 		if (m_CurrentTown != town_name && distance < 500) {
 			m_CurrentTown = town_name;
 			m_LocationTextUI = new LocationTextUI(town_name, distance.ToString());
-			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(m_LocationTextUI.Delete, 5000);
 		}
 	}
 		
