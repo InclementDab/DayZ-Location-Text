@@ -71,6 +71,7 @@ class LocationTextModule: JMModuleBase
 		Print(m_TownPositions.Count());
 		Print(town_name);
 		Print(m_CurrentTown);
+		Print(distance);
 		if (m_CurrentTown != town_name && distance < 100) {
 			Print("yay");
 			m_CurrentTown = town_name;
