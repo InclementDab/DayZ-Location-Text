@@ -18,16 +18,17 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 {
 	void LocationTextUI(LocationData location_data)
 	{
+		Print(location_data.TownName);
 		GetTemplateController().LocationTextLine0 = location_data.TownName;
 		GetTemplateController().LocationTextLine1 = location_data.TownLocation;
 		GetTemplateController().LocationTextLine2 = location_data.SomethingElse;
 		GetTemplateController().LocationTextLine3 = location_data.CurrentTime;
-		GetTemplateController().NotifyPropertyChanged();
+		GetTemplateController().NotifyPropertyChanged("LocationTextLine0");
 	}
 	
 	override string GetLayoutFile() 
 	{
-		return "LocationText/layouts/LocationTextUI.layout";
+		return "LocationText/LocationText/layouts/LocationTextUI.layout";
 	}
 }
 
@@ -72,7 +73,7 @@ class LocationTextModule: JMModuleBase
 		Print(town_name);
 		Print(m_CurrentTown);
 		Print(distance);
-		if (m_CurrentTown != town_name && distance < 100) {
+		if (m_CurrentTown != town_name && distance < 500) {
 			Print("yay");
 			m_CurrentTown = town_name;
 			
@@ -112,15 +113,18 @@ class LocationTextModule: JMModuleBase
 		string world_name;
 		GetGame().GetWorldName(world_name);
 		string cfg = "CfgWorlds " + world_name + " Names";		
-		
-		string allowed_types = "Capital City";
-		
+		string allowed_types = "Capital City Village";
 		for (int i = 0; i < GetGame().ConfigGetChildrenCount(cfg); i++) {
 			string city;
-			GetGame().ConfigGetChildName(cfg, i, city);			
-			vector city_position = GetGame().ConfigGetVector(string.Format("%1 %2 position", cfg, city));
+			GetGame().ConfigGetChildName(cfg, i, city);	
+			vector city_position; 
+			TFloatArray float_array = {};
+			GetGame().ConfigGetFloatArray(string.Format("%1 %2 position", cfg, city), float_array);
+			city_position[0] = float_array[0]; city_position[2] = float_array[1];
+			city_position[1] = GetGame().SurfaceY(city_position[0], city_position[2]);
+			
 			if (allowed_types.Contains(GetGame().ConfigGetTextOut(string.Format("%1 %2 type", cfg, city)))) {
-				town_positions.Insert(city, city_position);
+				town_positions.Insert(GetGame().ConfigGetTextOut(string.Format("%1 %2 name", cfg, city)), city_position);
 			}
 		}
 	}
