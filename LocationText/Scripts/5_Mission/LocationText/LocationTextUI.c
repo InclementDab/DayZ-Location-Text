@@ -1,34 +1,38 @@
 class LocationTextController: Controller
 {
-	string LocationTextLine0;
-	string LocationTextLine1;
+	string TownName;
+	string TownLocation;
 	string LocationTextLine2;
 	string LocationTextLine3;
 }
 
-class LocationData
-{	
-	string TownName;
-	string TownLocation;
-	string SomethingElse;
-	string CurrentTime;
-}
-
 class LocationTextUI: ScriptViewTemplate<LocationTextController>
-{
-	void LocationTextUI(LocationData location_data)
+{	
+	void LocationTextUI(string town_name, string town_location)
 	{
-		Print(location_data.TownName);
-		GetTemplateController().LocationTextLine0 = location_data.TownName;
-		GetTemplateController().LocationTextLine1 = location_data.TownLocation;
-		GetTemplateController().LocationTextLine2 = location_data.SomethingElse;
-		GetTemplateController().LocationTextLine3 = location_data.CurrentTime;
-		GetTemplateController().NotifyPropertyChanged("LocationTextLine0");
+		thread TextCrawl("TownName", town_name);
+		thread TextCrawl("TownLocation", town_location);
+	}
+	
+	private void TextCrawl(string property_name, string text)
+	{
+		string text_crawl;
+		for (int i = 0; i < text.Length(); i++) {
+			text_crawl += text[i];
+			EnScript.SetClassVar(GetTemplateController(), property_name, 0, text_crawl);
+			GetTemplateController().NotifyPropertyChanged(property_name);
+			Sleep(100);
+		}
 	}
 	
 	override string GetLayoutFile() 
 	{
 		return "LocationText/LocationText/layouts/LocationTextUI.layout";
+	}
+	
+	void Delete()
+	{
+		delete this;
 	}
 }
 
@@ -65,35 +69,20 @@ class LocationTextModule: JMModuleBase
 		delete m_TownPositions;
 	}
 	
+	protected ref LocationTextUI m_LocationTextUI;
+	
 	void OnLocationUpdate()
 	{
 		string town_name;
 		float distance = GetClosestTown(town_name);
-		Print(m_TownPositions.Count());
-		Print(town_name);
-		Print(m_CurrentTown);
-		Print(distance);
+		
 		if (m_CurrentTown != town_name && distance < 500) {
-			Print("yay");
 			m_CurrentTown = town_name;
-			
-			LocationData location_data();
-			location_data.TownName = town_name;
-			location_data.TownLocation = distance.ToString(); // todo: coordinates
-			location_data.SomethingElse = "something else";
-			location_data.CurrentTime = GetGame().GetTime().ToString();
-			
-			thread RunLocationUpdate(location_data);
+			m_LocationTextUI = new LocationTextUI(town_name, distance.ToString());
+			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(m_LocationTextUI.Delete, 5000);
 		}
 	}
-	
-	private void RunLocationUpdate(LocationData location_data)
-	{
-		LocationTextUI text_ui = new LocationTextUI(location_data);
-		Sleep(5000);
-		delete text_ui;
-	}
-	
+		
 	float GetClosestTown(out string town_name)
 	{
 		float closest = FLT_MAX;
