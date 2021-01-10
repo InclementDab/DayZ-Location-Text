@@ -10,7 +10,13 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 {	
 	void LocationTextUI(string town_name, string town_location)
 	{
+		thread RunTextCrawl(town_name, town_location);
+	}
+	
+	private void RunTextCrawl(string town_name, string town_location)
+	{
 		thread TextCrawl("TownName", town_name);
+		Sleep(2000);
 		thread TextCrawl("TownLocation", town_location);
 	}
 	
