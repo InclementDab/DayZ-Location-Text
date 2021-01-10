@@ -21,6 +21,8 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 		Sleep(5000);
 		TextDestroy("TownName");
 		TextDestroy("TownLocation");
+		
+		Sleep(1000);
 		Delete();
 	}
 	
