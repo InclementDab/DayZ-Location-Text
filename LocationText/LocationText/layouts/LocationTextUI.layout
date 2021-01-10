@@ -1,0 +1,92 @@
+FrameWidgetClass LocationTextFrame {
+ ignorepointer 1
+ position 0 0
+ size 1 1
+ halign center_ref
+ valign center_ref
+ hexactpos 1
+ vexactpos 1
+ hexactsize 0
+ vexactsize 0
+ {
+  WrapSpacerWidgetClass LocationTextWrapper {
+   ignorepointer 1
+   position 0.1 0.1
+   size 0.2 0
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   Padding 0
+   Margin 0
+   "Size To Content H" 1
+   "Size To Content V" 1
+   {
+    TextWidgetClass LocationTextLine0 {
+     ignorepointer 1
+     position 10 10
+     size 1 25
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     scriptclass "ViewBinding"
+     text "Test"
+     font "gui/fonts/MetronBook"
+     {
+      ScriptParamsClass {
+      }
+     }
+    }
+    TextWidgetClass LocationTextLine1 {
+     ignorepointer 1
+     position 10 10
+     size 1 25
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     scriptclass "ViewBinding"
+     text "Test"
+     font "gui/fonts/MetronBook"
+     {
+      ScriptParamsClass {
+      }
+     }
+    }
+    TextWidgetClass LocationTextLine2 {
+     ignorepointer 1
+     position 10 10
+     size 1 25
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     scriptclass "ViewBinding"
+     text "Test"
+     font "gui/fonts/MetronBook"
+     {
+      ScriptParamsClass {
+      }
+     }
+    }
+    TextWidgetClass LocationTextLine3 {
+     ignorepointer 1
+     position 10 10
+     size 1 25
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     scriptclass "ViewBinding"
+     text "Test"
+     font "gui/fonts/MetronBook"
+     {
+      ScriptParamsClass {
+      }
+     }
+    }
+   }
+  }
+ }
+}

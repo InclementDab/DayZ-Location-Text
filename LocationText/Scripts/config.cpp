@@ -1,7 +1,7 @@
 
 class CfgPatches
 {
-	class Editor_Scripts
+	class LocationText_Scripts
 	{
         units[] = {};
         weapons[] = {};
@@ -12,15 +12,15 @@ class CfgPatches
 
 class CfgMods 
 {
-	class DZ_Editor
+	class DZ_LocationText
 	{
-		name = "DayZ Editor";
-		dir = "DayZEditor";
+		name = "Location Text";
+		dir = "LocationText";
 		credits = "InclementDab";
 		author = "InclementDab";
-		creditsJson = "DayZEditor/Scripts/Data/Credits.json";
-		versionPath = "DayZEditor/scripts/Data/Version.hpp";
-		inputs = "DayZEditor/Scripts/Data/Inputs.xml";
+		creditsJson = "LocationText/Scripts/Data/Credits.json";
+		versionPath = "LocationText/scripts/Data/Version.hpp";
+		inputs = "LocationText/Scripts/Data/Inputs.xml";
 		type = "mod";
 		dependencies[] =
 		{
@@ -32,7 +32,7 @@ class CfgMods
 			{
 				files[]=
 				{
-					"DayZEditor/gui/imagesets/dayz_editor_gui.imageset"
+					"LocationText/gui/imagesets/dayz_editor_gui.imageset"
 				};
 			};
 			class engineScriptModule
@@ -40,8 +40,8 @@ class CfgMods
 				value = "";
 				files[] =
 				{
-					"DayZEditor/scripts/common",
-					"DayZEditor/scripts/1_core"
+					"LocationText/scripts/common",
+					"LocationText/scripts/1_core"
 				};
 			};
 
@@ -50,8 +50,8 @@ class CfgMods
 				value="";
 				files[] = 
 				{
-					"DayZEditor/scripts/common",
-					"DayZEditor/scripts/3_Game"
+					"LocationText/scripts/common",
+					"LocationText/scripts/3_Game"
 				};
 			};
 			class worldScriptModule
@@ -59,8 +59,8 @@ class CfgMods
 				value="";
 				files[] = 
 				{
-					"DayZEditor/scripts/common",
-					"DayZEditor/scripts/4_World"
+					"LocationText/scripts/common",
+					"LocationText/scripts/4_World"
 				};
 			};
 
@@ -69,8 +69,8 @@ class CfgMods
 				value="";
 				files[] = 
 				{
-					"DayZEditor/scripts/common",
-					"DayZEditor/scripts/5_Mission"
+					"LocationText/scripts/common",
+					"LocationText/scripts/5_Mission"
 				};
 			};
 		};

@@ -34,7 +34,9 @@ GameProjectClass {
 				ScriptModulePathClass {
 					Name "core"
 					Paths {
-						"scripts/1_Core"
+						"scripts/1_Core"		
+						"JM/CF/defines"
+						"JM/CF/scripts/1_Core"
 						"LocationText/scripts/1_Core"
 					}
 					EntryPoint ""
@@ -49,7 +51,13 @@ GameProjectClass {
 				ScriptModulePathClass {
 					Name "game"
 					Paths {
-						"scripts/3_Game"
+						"scripts/3_Game"			
+						"JM/CF/defines"
+						"JM/CF/scripts/3_Game"
+						"JM/CF/XML/3_Game"
+						"JM/CF/ModStorage/3_Game"
+						"JM/CF/LayoutBindingManager/3_Game"
+						"JM/CF/Permissions/3_Game"
 						"LocationText/Scripts/3_Game"
 					}
 					EntryPoint "CreateGame"
@@ -58,6 +66,10 @@ GameProjectClass {
 					Name "world"
 					Paths {
 						"scripts/4_World"
+						"JM/CF/defines"
+						"JM/CF/scripts/4_World"
+						"JM/CF/ModStorage/4_World"
+						"JM/CF/Permissions/4_World"
 						"LocationText/scripts/4_World"
 					}
 					EntryPoint ""
@@ -66,6 +78,10 @@ GameProjectClass {
 					Name "mission"
 					Paths {
 						"scripts/5_Mission"
+						"JM/CF/defines"
+						"JM/CF/scripts/5_Mission"
+						"JM/CF/LayoutBindingManager/5_Mission"
+						"JM/CF/Permissions/5_Mission"
 						"LocationText/scripts/5_Mission"
 					}
 					EntryPoint "CreateMission"
@@ -76,7 +92,7 @@ GameProjectClass {
 					Paths {
 						"scripts/editor/Workbench"
 						"scripts/editor/plugins"
-						"LocationText/scripts/editor/plugins"
+						"LocationText/scripts/plugins"
 					} 
 					EntryPoint ""
 				} 
