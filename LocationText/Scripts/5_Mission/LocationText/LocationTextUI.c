@@ -86,6 +86,11 @@ class LocationTextModule: JMModuleBase
 	
 	protected string m_CurrentTown;
 		
+	void DebugRun()
+	{
+		m_CurrentTown = string.Empty;
+	}
+	
 	override void OnMissionStart()
 	{	
 		GetTownPosition(m_TownPositions);
@@ -107,14 +112,16 @@ class LocationTextModule: JMModuleBase
 	
 	void OnLocationUpdate()
 	{
+		string world_name;
+		GetGame().GetWorldName(world_name);
 		string town_name;
 		float distance = GetClosestTown(town_name);
 		
 		if (m_CurrentTown != town_name && distance < 500) {
-			m_CurrentTown = town_name;
+			m_CurrentTown = town_name;			
 			int year, month, day, hour, minute;
 			GetGame().GetWorld().GetDate(year, month, day, hour, minute);
-			m_LocationTextUI = new LocationTextUI(town_name, distance.ToString(), string.Format("%1/%2/%3 %4:%5", month, day, year, hour, minute), "696969");
+			m_LocationTextUI = new LocationTextUI(string.Format("%1, %2", m_CurrentTown, world_name), distance.ToString(), string.Format("%1/%2/%3 %4:%5", month, day, year, hour, minute), "696969");
 		}
 	}
 		
