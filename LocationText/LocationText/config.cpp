@@ -39,3 +39,27 @@ class CfgSoundSets
 		soundShaders[] = {"LocationText_Click_Shader"};
 	};
 };
+
+class CfgVehicles
+{
+	class Inventory_Base;
+	class Anvil: Inventory_Base
+	{
+		scope = 2;
+		model = "LocationText\LocationText\data\MINECROOFANVIL.p3d";
+		displayName = "Anvil, bitch";
+		descriptionShort = "Clunk";
+		attachments[] = {};
+		itemSize[] = {5,2};
+		class DamageSystem
+		{
+			class GlobalHealth
+			{
+				class Health
+				{
+					hitpoints = 100;
+				};
+			};
+		};
+	};
+};

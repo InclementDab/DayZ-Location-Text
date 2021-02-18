@@ -2,25 +2,31 @@ class LocationTextController: Controller
 {
 	string TownName;
 	string TownLocation;
-	string LocationTextLine2;
-	string LocationTextLine3;
+	string CurrentTime;
+	string TownCoordinates;
 }
 
 class LocationTextUI: ScriptViewTemplate<LocationTextController>
 {	
-	void LocationTextUI(string town_name, string town_location)
+	void LocationTextUI(string town_name, string town_location, string current_time, string town_coordinates)
 	{
-		thread RunTextCrawl(town_name, town_location);
+		thread RunTextCrawl(town_name, town_location, current_time, town_coordinates);
 	}
 	
-	private void RunTextCrawl(string town_name, string town_location)
+	private void RunTextCrawl(string town_name, string town_location, string current_time, string town_coordinates)
 	{
 		TextCrawl("TownName", town_name);
 		Sleep(1000);
 		TextCrawl("TownLocation", town_location);
+		Sleep(1000);
+		TextCrawl("CurrentTime", current_time);
+		Sleep(1000);
+		TextCrawl("TownCoordinates", town_coordinates);
 		Sleep(5000);
 		TextDestroy("TownName");
-		TextDestroy("TownLocation");
+		TextDestroy("TownLocation");		
+		TextDestroy("CurrentTime");
+		TextDestroy("TownCoordinates");
 		
 		Sleep(1000);
 		Delete();
@@ -106,7 +112,9 @@ class LocationTextModule: JMModuleBase
 		
 		if (m_CurrentTown != town_name && distance < 500) {
 			m_CurrentTown = town_name;
-			m_LocationTextUI = new LocationTextUI(town_name, distance.ToString());
+			int year, month, day, hour, minute;
+			GetGame().GetWorld().GetDate(year, month, day, hour, minute);
+			m_LocationTextUI = new LocationTextUI(town_name, distance.ToString(), string.Format("%1/%2/%3 %4:%5", month, day, year, hour, minute), "696969");
 		}
 	}
 		
