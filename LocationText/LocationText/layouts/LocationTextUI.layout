@@ -12,7 +12,7 @@ FrameWidgetClass LocationTextFrame {
   WrapSpacerWidgetClass LocationTextWrapper {
    ignorepointer 1
    position 0.1 0.1
-   size 0.2 0
+   size 0.5 0
    hexactpos 0
    vexactpos 0
    hexactsize 0

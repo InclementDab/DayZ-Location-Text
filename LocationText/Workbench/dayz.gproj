@@ -56,7 +56,7 @@ GameProjectClass {
 						"JM/CF/XML/3_Game"
 						"JM/CF/LayoutBindingManager/3_Game"
 						"JM/CF/Permissions/3_Game"
-						"JM/CF/Debugger/3_Game"
+						"JM/CF/DebugUI/3_Game"
 						"JM/CF/scripts/3_Game"
 						"LocationText/Scripts/3_Game"
 					}
