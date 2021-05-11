@@ -1,12 +1,3 @@
-modded class MissionServer
-{
-	override void InvokeOnConnect(PlayerBase player, PlayerIdentity identity)
-	{
-		super.InvokeOnConnect(player, identity);
-		player.SetHealth("", "Shock", 30);
-	}
-}
-
 class LocationTextController: Controller
 {
 	string TownName;
@@ -50,7 +41,7 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 			GetTemplateController().NotifyPropertyChanged(property_name);
 			EffectSound sound;
 			GetGame().GetPlayer().PlaySoundSet(sound, "LocationText_Click", 0, 0);			
-			Sleep(50);
+			Sleep(25);
 		}
 	}
 	
@@ -69,7 +60,6 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 			if (wave) {
 				wave.SetFrequency(1.25);
 			}
-			
 			
 			Sleep(10);
 		}
