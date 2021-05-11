@@ -35,12 +35,15 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 	private void TextCrawl(string property_name, string text)
 	{
 		for (int i = 1; i <= text.Length(); i++) {
-			EnScript.SetClassVar(GetTemplateController(), property_name, 0, text.Substring(0, i));
+			EnScript.SetClassVar(GetTemplateController(), property_name, 0, text.Substring(0, i) + " |");
 			GetTemplateController().NotifyPropertyChanged(property_name);
 			EffectSound sound;
 			GetGame().GetPlayer().PlaySoundSet(sound, "LocationText_Click", 0, 0);			
-			Sleep(30);
+			Sleep(50);
 		}
+		
+		EnScript.SetClassVar(GetTemplateController(), property_name, 0, text);
+		GetTemplateController().NotifyPropertyChanged(property_name);
 	}
 	
 	private void TextDestroy(string property_name)
@@ -48,18 +51,15 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 		string text;
 		EnScript.GetClassVar(GetTemplateController(), property_name, 0, text);
 		for (int i = text.Length() - 1; i >= 0; i--) {
-			EnScript.SetClassVar(GetTemplateController(), property_name, 0, text.Substring(0, i));
+			EnScript.SetClassVar(GetTemplateController(), property_name, 0, text.Substring(0, i) + " |");
 			GetTemplateController().NotifyPropertyChanged(property_name);
 			EffectSound sound;
-			GetGame().GetPlayer().PlaySoundSet(sound, "LocationText_Click", 0, 0);
-			/*AbstractWave wave;
-			EnScript.GetClassVar(sound, "m_SoundWaveObject", 0, wave);
-			if (wave) {
-				wave.SetFrequency(1.10);
-			}*/
-			
-			Sleep(10);
+			GetGame().GetPlayer().PlaySoundSet(sound, "LocationText_Click", 0, 0);			
+			Sleep(15);
 		}
+		
+		EnScript.SetClassVar(GetTemplateController(), property_name, 0, "");
+		GetTemplateController().NotifyPropertyChanged(property_name);
 	}
 	
 	override string GetLayoutFile() 
