@@ -85,8 +85,8 @@ class LocationTextModule: JMModuleBase
 			string location = string.Format("%1, %2", m_CurrentTown.TownName, world_name);
 			string latlong = string.Format("%1°N %2°W", GetGame().GetWorld().GetLatitude(), GetGame().GetWorld().GetLongitude());
 			string date = string.Format("%1/%2/%3 %4:%5", month.ToStringLen(2), day.ToStringLen(2), year.ToStringLen(2), hour.ToStringLen(2), minute.ToStringLen(2));
-			string days_survived = PlayerBase.Cast(GetGame().GetPlayer()).GetSurvivedTime().ToString();
-			m_LocationTextUI = new LocationTextUI(location, days_survived, date, latlong);
+			string days_survived = GetTimeString(PlayerBase.Cast(GetGame().GetPlayer()).GetSurvivedTime());
+			m_LocationTextUI = new LocationTextUI(location, date, days_survived, latlong);
 		}
 	}
 		
@@ -132,6 +132,11 @@ class LocationTextModule: JMModuleBase
 		}
 		
 		return town_positions;
+	}
+	
+	static string GetTimeString(int time_seconds)
+	{
+		return string.Format("Day %1", time_seconds / 3600 / 24);
 	}
 	
 	override bool IsClient()

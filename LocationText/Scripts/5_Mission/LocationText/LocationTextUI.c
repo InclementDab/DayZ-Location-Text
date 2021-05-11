@@ -41,7 +41,7 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 			GetTemplateController().NotifyPropertyChanged(property_name);
 			EffectSound sound;
 			GetGame().GetPlayer().PlaySoundSet(sound, "LocationText_Click", 0, 0);			
-			Sleep(25);
+			Sleep(30);
 		}
 	}
 	
@@ -55,11 +55,11 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 			GetTemplateController().NotifyPropertyChanged(property_name);
 			EffectSound sound;
 			GetGame().GetPlayer().PlaySoundSet(sound, "LocationText_Click", 0, 0);
-			AbstractWave wave;
+			/*AbstractWave wave;
 			EnScript.GetClassVar(sound, "m_SoundWaveObject", 0, wave);
 			if (wave) {
-				wave.SetFrequency(1.25);
-			}
+				wave.SetFrequency(1.10);
+			}*/
 			
 			Sleep(10);
 		}
