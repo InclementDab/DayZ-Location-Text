@@ -26,16 +26,16 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 	{		
 		TextCrawl("TownName", town_name);
 		Sleep(1000);
-		TextCrawl("TownLocation", town_location);
-		Sleep(1000);
 		TextCrawl("CurrentTime", current_time);
 		Sleep(1000);
 		TextCrawl("TownCoordinates", town_coordinates);
+		Sleep(1000);
+		TextCrawl("TownLocation", town_location);
 		Sleep(5000);
 		TextDestroy("TownName");
-		TextDestroy("TownLocation");		
 		TextDestroy("CurrentTime");
 		TextDestroy("TownCoordinates");
+		TextDestroy("TownLocation");
 		
 		Sleep(1000);
 		Delete();
@@ -62,9 +62,20 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 			text[i] = "";
 			EnScript.SetClassVar(GetTemplateController(), property_name, 0, text);
 			GetTemplateController().NotifyPropertyChanged(property_name);
-			EffectSound sound;
-			GetGame().GetPlayer().PlaySoundSet(sound, "LocationText_Click", 0, 0);
-			Sleep(25);
+			EffectSound sound = SEffectManager.CreateSound("LocationText_Click", GetGame().GetPlayer().GetPosition());
+			if (sound) {
+				sound.SetParent(GetGame().GetPlayer());
+				AbstractWave wave;
+				EnScript.GetClassVar(sound, "m_SoundWaveObject", 0, wave);
+				Print(wave);
+				if (wave) {
+					wave.SetFrequency(2.0);
+				}
+				
+				sound.SoundPlay();
+			}
+			
+			Sleep(20);
 		}
 	}
 	

@@ -36,6 +36,11 @@ class LocationTextModule: JMModuleBase
 		m_CurrentTown = null;
 	}
 	
+	LocationTextModule GetInstance()
+	{
+		return LocationTextModule.Cast(GetModuleManager().GetModule(LocationTextModule));
+	}
+	
 	override void OnMissionStart()
 	{	
 		m_LocationTimer = new Timer(CALL_CATEGORY_GAMEPLAY);
@@ -56,8 +61,13 @@ class LocationTextModule: JMModuleBase
 	{
 		string world_name;
 		GetGame().GetWorldName(world_name);
+		if (world_name[0]) {
+			string w1 = world_name[0];
+			w1.ToUpper();
+			world_name[0] = w1;
+		}
+		
 		TownEntry town_entry = GetClosestTown();
-	
 		if (!town_entry) {
 			return;
 		}
@@ -72,9 +82,7 @@ class LocationTextModule: JMModuleBase
 				g_LayoutBindingManager = new LayoutBindingManager();
 			}
 			
-			int lat, long;
-			GetLatLong(lat, long);
-			string latlong = string.Format("%1°N %2°W", lat, long);
+			string latlong = string.Format("%1°N %2°W", GetGame().GetWorld().GetLatitude(), GetGame().GetWorld().GetLongitude());
 			m_LocationTextUI = new LocationTextUI(string.Format("%1, %2", m_CurrentTown.TownName, world_name), town_entry.GetTownDistance().ToString(), string.Format("%1/%2/%3 %4:%5", month.ToStringLen(2), day.ToStringLen(2), year.ToStringLen(2), hour.ToStringLen(2), minute.ToStringLen(2)), latlong);
 		}
 	}
@@ -121,15 +129,6 @@ class LocationTextModule: JMModuleBase
 		}
 		
 		return town_positions;
-	}
-		
-	void GetLatLong(out int lat, out int long)
-	{
-		string world_name;
-		GetGame().GetWorldName(world_name);
-		
-		long = GetGame().ConfigGetInt(string.Format("CfgWorlds %1 longitude", world_name));
-		lat = GetGame().ConfigGetInt(string.Format("CfgWorlds %1 latitude", world_name));		
 	}
 	
 	override bool IsClient()

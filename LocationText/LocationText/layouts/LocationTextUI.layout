@@ -52,7 +52,7 @@ FrameWidgetClass LocationTextFrame {
      font "gui/fonts/MetronBook"
      {
       ScriptParamsClass {
-       Binding_Name "TownLocation"
+       Binding_Name "CurrentTime"
       }
      }
     }
@@ -69,7 +69,7 @@ FrameWidgetClass LocationTextFrame {
      font "gui/fonts/MetronBook"
      {
       ScriptParamsClass {
-       Binding_Name "CurrentTime"
+       Binding_Name "TownCoordinates"
       }
      }
     }
@@ -86,7 +86,7 @@ FrameWidgetClass LocationTextFrame {
      font "gui/fonts/MetronBook"
      {
       ScriptParamsClass {
-       Binding_Name "TownCoordinates"
+       Binding_Name "TownLocation"
       }
      }
     }
