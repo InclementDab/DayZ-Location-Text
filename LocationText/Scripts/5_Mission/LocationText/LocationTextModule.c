@@ -58,15 +58,7 @@ class LocationTextModule: JMModuleBase
 	}
 	
 	void OnLocationUpdate()
-	{
-		string world_name;
-		GetGame().GetWorldName(world_name);
-		if (world_name[0]) {
-			string w1 = world_name[0];
-			w1.ToUpper();
-			world_name[0] = w1;
-		}
-		
+	{		
 		TownEntry town_entry = GetClosestTown();
 		if (!town_entry) {
 			return;
@@ -74,19 +66,13 @@ class LocationTextModule: JMModuleBase
 		
 		if (m_CurrentTown != town_entry && town_entry.GetTownDistance() < town_entry.GetTownSize()) {
 			m_CurrentTown = town_entry;
-			int year, month, day, hour, minute;
-			GetGame().GetWorld().GetDate(year, month, day, hour, minute);
-			
+						
 			// Bug is dumb but for whatever reason the LBM is causing it to log random shit to the text if its not initialized
 			if (!g_LayoutBindingManager) { 
 				g_LayoutBindingManager = new LayoutBindingManager();
 			}
 			
-			string location = string.Format("%1, %2", m_CurrentTown.TownName, world_name);
-			string latlong = string.Format("%1°N %2°W", GetGame().GetWorld().GetLatitude(), GetGame().GetWorld().GetLongitude());
-			string date = string.Format("%1/%2/%3 %4:%5", month.ToStringLen(2), day.ToStringLen(2), year.ToStringLen(2), hour.ToStringLen(2), minute.ToStringLen(2));
-			string days_survived = GetTimeString(PlayerBase.Cast(GetGame().GetPlayer()).GetSurvivedTime());
-			m_LocationTextUI = new LocationTextUI(location, date, days_survived, latlong);
+			m_LocationTextUI = new LocationTextUI(m_CurrentTown);
 		}
 	}
 		
@@ -97,7 +83,7 @@ class LocationTextModule: JMModuleBase
 		if (!GetGame().GetPlayer() || !IsMissionClient()) return null;
 		
 		foreach (TownEntry town_entry: m_TownEntries) {
-			if (town_entry.GetTownDistance() < closest) {
+			if (town_entry && town_entry.GetTownDistance() < closest) {
 				result = town_entry;
 				closest = town_entry.GetTownDistance();
 			}
@@ -132,11 +118,6 @@ class LocationTextModule: JMModuleBase
 		}
 		
 		return town_positions;
-	}
-	
-	static string GetTimeString(int time_seconds)
-	{
-		return string.Format("Day %1", time_seconds / 3600 / 24);
 	}
 	
 	override bool IsClient()
