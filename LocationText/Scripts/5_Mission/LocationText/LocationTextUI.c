@@ -48,8 +48,7 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 		string text;
 		EnScript.GetClassVar(GetTemplateController(), property_name, 0, text);
 		for (int i = text.Length() - 1; i >= 0; i--) {
-			text[i] = "";
-			EnScript.SetClassVar(GetTemplateController(), property_name, 0, text);
+			EnScript.SetClassVar(GetTemplateController(), property_name, 0, text.Substring(0, i));
 			GetTemplateController().NotifyPropertyChanged(property_name);
 			EffectSound sound;
 			GetGame().GetPlayer().PlaySoundSet(sound, "LocationText_Click", 0, 0);
