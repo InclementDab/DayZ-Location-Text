@@ -29,19 +29,20 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 		TextDestroy("TownLocation");
 		
 		Sleep(1000);
-		Delete();
+		delete this;
 	}
 	
 	private void TextCrawl(string property_name, string text)
 	{
 		for (int i = 1; i <= text.Length(); i++) {
-			EnScript.SetClassVar(GetTemplateController(), property_name, 0, text.Substring(0, i) + " |");
+			EnScript.SetClassVar(GetTemplateController(), property_name, 0, text.Substring(0, i) + "|");
 			GetTemplateController().NotifyPropertyChanged(property_name);
 			EffectSound sound;
 			GetGame().GetPlayer().PlaySoundSet(sound, "LocationText_Click", 0, 0);			
 			Sleep(50);
 		}
 		
+		Sleep(150);
 		EnScript.SetClassVar(GetTemplateController(), property_name, 0, text);
 		GetTemplateController().NotifyPropertyChanged(property_name);
 	}
@@ -51,13 +52,14 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 		string text;
 		EnScript.GetClassVar(GetTemplateController(), property_name, 0, text);
 		for (int i = text.Length() - 1; i >= 0; i--) {
-			EnScript.SetClassVar(GetTemplateController(), property_name, 0, text.Substring(0, i) + " |");
+			EnScript.SetClassVar(GetTemplateController(), property_name, 0, text.Substring(0, i) + "|");
 			GetTemplateController().NotifyPropertyChanged(property_name);
 			EffectSound sound;
 			GetGame().GetPlayer().PlaySoundSet(sound, "LocationText_Click", 0, 0);			
 			Sleep(15);
 		}
 		
+		Sleep(75);
 		EnScript.SetClassVar(GetTemplateController(), property_name, 0, "");
 		GetTemplateController().NotifyPropertyChanged(property_name);
 	}
@@ -65,10 +67,5 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 	override string GetLayoutFile() 
 	{
 		return "LocationText/LocationText/layouts/LocationTextUI.layout";
-	}
-	
-	void Delete()
-	{
-		delete this;
 	}
 }
