@@ -1,27 +1,27 @@
-class TownEntry
+class Town
 {
-	string TownName;
-	string TownType;
-	vector TownPosition;
+	string Name;
+	string Type;
+	vector Position;
 	
-	int GetTownSize()
+	int GetSize()
 	{
-		switch (TownType) {
+		switch (Type) {
 			case "Capital": return 500;
 			case "City": 	return 300;
 			case "Village": return 100;
 		}
 		
-		return 0;
+		return 300;
 	}
 	
-	float GetTownDistance()
+	float GetDistance()
 	{	
-		return vector.Distance(GetGame().GetPlayer().GetPosition(), TownPosition);
+		return vector.Distance(GetGame().GetPlayer().GetPosition(), Position);
 	}
 }
 
-typedef array<ref TownEntry> TTownEntries;
+typedef array<ref Town> TTownEntries;
 
 class LocationTextModule: JMModuleBase
 {
@@ -29,7 +29,7 @@ class LocationTextModule: JMModuleBase
 	protected ref Timer m_LocationTimer;
 	protected ref TTownEntries m_TownEntries = EnumerateTownEntries();
 	
-	protected TownEntry m_CurrentTown;
+	protected Town m_CurrentTown;
 		
 	void DebugRun()
 	{
@@ -59,12 +59,12 @@ class LocationTextModule: JMModuleBase
 	
 	void OnLocationUpdate()
 	{		
-		TownEntry town_entry = GetClosestTown();
+		Town town_entry = GetClosestTown();
 		if (!town_entry) {
 			return;
 		}
 		
-		if (m_CurrentTown != town_entry && town_entry.GetTownDistance() < town_entry.GetTownSize()) {
+		if (m_CurrentTown != town_entry && town_entry.GetDistance() < town_entry.GetSize()) {
 			m_CurrentTown = town_entry;
 						
 			// Bug is dumb but for whatever reason the LBM is causing it to log random shit to the text if its not initialized
@@ -76,16 +76,16 @@ class LocationTextModule: JMModuleBase
 		}
 	}
 		
-	TownEntry GetClosestTown()
+	Town GetClosestTown()
 	{
 		float closest = FLT_MAX;
-		TownEntry result;
+		Town result;
 		if (!GetGame().GetPlayer() || !IsMissionClient()) return null;
 		
-		foreach (TownEntry town_entry: m_TownEntries) {
-			if (town_entry && town_entry.GetTownDistance() < closest) {
+		foreach (Town town_entry: m_TownEntries) {
+			if (town_entry && town_entry.GetDistance() < closest) {
 				result = town_entry;
-				closest = town_entry.GetTownDistance();
+				closest = town_entry.GetDistance();
 			}
 		}
 		
@@ -109,15 +109,20 @@ class LocationTextModule: JMModuleBase
 			city_position[1] = GetGame().SurfaceY(city_position[0], city_position[2]);
 			
 			if (allowed_types.Contains(GetGame().ConfigGetTextOut(string.Format("%1 %2 type", cfg, city)))) {
-				TownEntry town_entry();
-				town_entry.TownType = GetGame().ConfigGetTextOut(string.Format("%1 %2 type", cfg, city));
-				town_entry.TownName = GetGame().ConfigGetTextOut(string.Format("%1 %2 name", cfg, city));
-				town_entry.TownPosition = city_position;
+				Town town_entry();
+				town_entry.Type = GetGame().ConfigGetTextOut(string.Format("%1 %2 type", cfg, city));
+				town_entry.Name = GetGame().ConfigGetTextOut(string.Format("%1 %2 name", cfg, city));
+				town_entry.Position = city_position;
 				town_positions.Insert(town_entry);
 			}
 		}
 		
 		return town_positions;
+	}
+	
+	TTownEntries GetTownEntries()
+	{
+		return m_TownEntries;
 	}
 	
 	override bool IsClient()

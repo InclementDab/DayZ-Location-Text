@@ -9,7 +9,7 @@ class LocationTextController: Controller
 class LocationTextUI: ScriptViewTemplate<LocationTextController>
 {	
 	protected ref map<string, bool> m_ProtectDestroyMap = new map<string, bool>();
-	protected TownEntry m_TownEntry;
+	protected Town m_TownEntry;
 	protected ref Timer m_UpdateTimer = new Timer(CALL_CATEGORY_GUI);
 	
 	protected string m_Location;
@@ -17,7 +17,7 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 	protected string m_Date;
 	protected string m_DaysSurvived;
 	
-	void LocationTextUI(TownEntry town_entry)
+	void LocationTextUI(Town town_entry)
 	{
 		m_TownEntry = town_entry;
 		UpdateData();
@@ -64,7 +64,7 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 			world_name[0] = w1;
 		}
 		
-		m_Location = string.Format("%1, %2", m_TownEntry.TownName, world_name);
+		m_Location = string.Format("%1, %2", m_TownEntry.Name, world_name);
 		m_LatLong = string.Format("%1°N %2°W", GetGame().GetWorld().GetLatitude(), GetGame().GetWorld().GetLongitude());
 		m_Date = string.Format("%1/%2/%3 %4:%5", month.ToStringLen(2), day.ToStringLen(2), year.ToStringLen(2), hour.ToStringLen(2), minute.ToStringLen(2));
 		m_DaysSurvived = GetTimeString(PlayerBase.Cast(GetGame().GetPlayer()).GetSurvivedTime());
@@ -106,7 +106,8 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 			EnScript.SetClassVar(GetTemplateController(), property_name, 0, text.Substring(0, i) + "|");
 			GetTemplateController().NotifyPropertyChanged(property_name);
 			EffectSound sound;
-			GetGame().GetPlayer().PlaySoundSet(sound, "LocationText_Click", 0, 0);			
+			GetGame().GetPlayer().PlaySoundSet(sound, "LocationText_Click", 0, 0);		
+			sound.SetSoundVolume(0.25);	
 			Sleep(15);
 		}
 		
