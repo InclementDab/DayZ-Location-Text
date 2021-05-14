@@ -2,7 +2,7 @@ class LocationTextModule: JMModuleBase
 {
 	protected ref LocationTextUI m_LocationTextUI;
 	protected ref Timer m_LocationTimer;
-	protected ref TTownEntries m_TownEntries = EnumerateTownEntries();
+	protected ref TTownEntries m_TownEntries;
 	
 	protected Town m_CurrentTown;
 		
@@ -18,6 +18,7 @@ class LocationTextModule: JMModuleBase
 	
 	override void OnMissionStart()
 	{	
+		m_TownEntries = EnumerateTownEntries();
 		m_LocationTimer = new Timer(CALL_CATEGORY_GAMEPLAY);
 		m_LocationTimer.Run(10.0, this, "OnLocationUpdate", null, true);
 	}	
@@ -52,11 +53,13 @@ class LocationTextModule: JMModuleBase
 	}
 		
 	Town GetClosestTown()
-	{
-		float closest = FLT_MAX;
-		Town result;
-		if (!GetGame().GetPlayer() || !IsMissionClient()) return null;
+	{		
+		if (!GetGame().GetPlayer() || !IsMissionClient() || !m_TownEntries) {
+			return null;
+		}
 		
+		Town result;
+		float closest = FLT_MAX;
 		foreach (Town town_entry: m_TownEntries) {
 			if (town_entry && town_entry.GetDistance() < closest) {
 				result = town_entry;
