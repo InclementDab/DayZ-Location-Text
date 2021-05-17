@@ -55,16 +55,8 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 	{
 		int year, month, day, hour, minute;
 		GetGame().GetWorld().GetDate(year, month, day, hour, minute);
-		
-		string world_name;
-		GetGame().GetWorldName(world_name);
-		if (world_name[0]) {
-			string w1 = world_name[0];
-			w1.ToUpper();
-			world_name[0] = w1;
-		}
-		
-		m_Location = string.Format("%1, %2", m_TownEntry.Name, world_name);
+				
+		m_Location = string.Format("%1, %2", m_TownEntry.Name, GetWorldName());
 		m_LatLong = string.Format("%1°N %2°W", GetGame().GetWorld().GetLatitude(), GetGame().GetWorld().GetLongitude());
 		m_Date = string.Format("%1/%2/%3 %4:%5", month.ToStringLen(2), day.ToStringLen(2), year.ToStringLen(2), hour.ToStringLen(2), minute.ToStringLen(2));
 		m_DaysSurvived = GetTimeString(PlayerBase.Cast(GetGame().GetPlayer()).GetSurvivedTime());
@@ -111,9 +103,33 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 			Sleep(15);
 		}
 		
-		Sleep(75);
+		Sleep(60);
 		EnScript.SetClassVar(GetTemplateController(), property_name, 0, "");
 		GetTemplateController().NotifyPropertyChanged(property_name);
+	}
+	
+	static string GetWorldName()
+	{
+		string world_name;
+		GetGame().GetWorldName(world_name);
+		world_name.ToLower();
+		
+		switch (world_name) {
+			case "chernarusplus": 	
+				world_name = "chernarus";
+				break;
+			case "enoch": 			
+				world_name = "livonia"; 
+				break;
+		}
+		
+		if (world_name[0]) {
+			string w1 = world_name[0];
+			w1.ToUpper();
+			world_name[0] = w1;
+		}
+		
+		return world_name;
 	}
 	
 	static string GetTimeString(int time_seconds)
