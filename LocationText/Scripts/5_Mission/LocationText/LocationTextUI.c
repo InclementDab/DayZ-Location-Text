@@ -42,11 +42,13 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 		Sleep(2000);
 		thread TextCrawl("TownLocation", "m_DaysSurvived");
 		Sleep(5000);
-		TextDestroy("TownName");
-		TextDestroy("CurrentTime");
-		TextDestroy("TownCoordinates");
-		TextDestroy("TownLocation");
-		
+		thread TextDestroy("TownName");
+		Sleep(1000);
+		thread TextDestroy("CurrentTime");
+		Sleep(1000);
+		thread TextDestroy("TownCoordinates");
+		Sleep(1000);
+		thread TextDestroy("TownLocation");
 		Sleep(1000);
 		delete this;
 	}
@@ -57,7 +59,7 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 		GetGame().GetWorld().GetDate(year, month, day, hour, minute);
 				
 		m_Location = string.Format("%1, %2", m_TownEntry.Name, GetWorldName());
-		m_LatLong = string.Format("%1°N %2°W", GetGame().GetWorld().GetLatitude(), GetGame().GetWorld().GetLongitude());
+		m_LatLong = GetLatLong();
 		m_Date = string.Format("%1/%2/%3 %4:%5", month.ToStringLen(2), day.ToStringLen(2), year.ToStringLen(2), hour.ToStringLen(2), minute.ToStringLen(2));
 		m_DaysSurvived = GetTimeString(PlayerBase.Cast(GetGame().GetPlayer()).GetSurvivedTime());
 	}
@@ -130,6 +132,25 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 		}
 		
 		return world_name;
+	}
+	
+	static string GetLatLong()
+	{
+		float lat = GetGame().GetWorld().GetLatitude();
+		float lon = GetGame().GetWorld().GetLongitude();
+		
+		return string.Format("%1, %2", LatLongGetFullValue(lat, "N"), LatLongGetFullValue(lon, "W"));
+	}
+	
+	static string LatLongGetFullValue(float v, string nw)
+	{
+		float r1 = Math.Round(v);
+		float m1 = (v - r1) * 60;
+		float r2 = Math.Round(m1);
+		float s1 = (m1 - r2) * 60;
+		float r3 = Math.Round(s1);		
+		
+		return string.Format("%1°%2 %3'%4\"", r1, nw, r2, r3);
 	}
 	
 	static string GetTimeString(int time_seconds)
