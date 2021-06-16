@@ -76,7 +76,7 @@ class LocationTextModule: JMModuleBase
 		string world_name;
 		GetGame().GetWorldName(world_name);
 		string cfg = "CfgWorlds " + world_name + " Names";		
-		string allowed_types = "Capital City Village";
+		string allowed_types = "Capital City Village NameCapital NameCity NameVillage";
 		for (int i = 0; i < GetGame().ConfigGetChildrenCount(cfg); i++) {
 			string city;
 			GetGame().ConfigGetChildName(cfg, i, city);	
