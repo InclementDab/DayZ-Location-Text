@@ -1,4 +1,4 @@
-class LocationTextController: Controller
+class LocationTextController: ViewController
 {
 	string TownName;
 	string TownLocation;

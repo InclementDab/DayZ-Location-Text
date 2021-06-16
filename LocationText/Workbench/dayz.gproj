@@ -58,6 +58,7 @@ GameProjectClass {
 						"JM/CF/Permissions/3_Game"
 						"JM/CF/DebugUI/3_Game"
 						"JM/CF/scripts/3_Game"
+						"DabsFramework/Scripts/3_Game"
 						"LocationText/Scripts/3_Game"
 					}
 					EntryPoint "CreateGame"
@@ -70,6 +71,7 @@ GameProjectClass {
 						"JM/CF/scripts/4_World"
 						"JM/CF/ModStorage/4_World"
 						"JM/CF/Permissions/4_World"
+						"DabsFramework/Scripts/4_World"
 						"LocationText/scripts/4_World"
 					}
 					EntryPoint ""
@@ -82,6 +84,7 @@ GameProjectClass {
 						"JM/CF/scripts/5_Mission"
 						"JM/CF/LayoutBindingManager/5_Mission"
 						"JM/CF/Permissions/5_Mission"
+						"DabsFramework/Scripts/5_Mission"
 						"LocationText/scripts/5_Mission"
 					}
 					EntryPoint "CreateMission"
