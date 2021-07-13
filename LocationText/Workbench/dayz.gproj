@@ -37,6 +37,7 @@ GameProjectClass {
 						"scripts/1_Core"		
 						"JM/CF/defines"
 						"JM/CF/scripts/1_Core"
+						"DabsFramework/Scripts/1_Core"
 						"LocationText/scripts/1_Core"
 					}
 					EntryPoint ""

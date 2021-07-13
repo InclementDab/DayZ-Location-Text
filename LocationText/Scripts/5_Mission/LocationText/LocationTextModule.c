@@ -44,8 +44,8 @@ class LocationTextModule: JMModuleBase
 			m_CurrentTown = town_entry;
 						
 			// Bug is dumb but for whatever reason the LBM is causing it to log random shit to the text if its not initialized
-			if (!g_MVC) { 
-				g_MVC = new MVC();
+			if (!MVC.GetInstance()) { 
+				MVC.Start();
 			}
 			
 			m_LocationTextUI = new LocationTextUI(m_CurrentTown);
