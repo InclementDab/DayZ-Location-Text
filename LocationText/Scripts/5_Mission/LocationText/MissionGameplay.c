@@ -21,7 +21,10 @@ modded class MissionGameplay
 	{
 		super.OnMissionFinish();
 		
-		GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).Remove(OnLocationUpdate);
+		if (GetGame()) {
+			GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).Remove(OnLocationUpdate);
+		}
+		
 		delete m_TownEntries;
 	}
 	
