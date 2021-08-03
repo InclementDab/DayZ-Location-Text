@@ -43,13 +43,13 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 		thread TextCrawl("TownLocation", "m_DaysSurvived");
 		Sleep(5000);
 		thread TextDestroy("TownName");
-		Sleep(1000);
+		Sleep(700);
 		thread TextDestroy("CurrentTime");
-		Sleep(1000);
+		Sleep(700);
 		thread TextDestroy("TownCoordinates");
-		Sleep(1000);
+		Sleep(700);
 		thread TextDestroy("TownLocation");
-		Sleep(1000);
+		Sleep(700);
 		delete this;
 	}
 	
