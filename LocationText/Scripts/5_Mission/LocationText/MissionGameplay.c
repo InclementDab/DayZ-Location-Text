@@ -1,35 +1,27 @@
-class LocationTextModule: JMModuleBase
+class Testing: MissionGameplay
 {
 	protected ref LocationTextUI m_LocationTextUI;
-	protected ref Timer m_LocationTimer;
 	protected ref TTownEntries m_TownEntries;
 	
 	protected Town m_CurrentTown;
-		
-	void DebugRun()
+	
+	void DebugLocationText()
 	{
 		m_CurrentTown = null;
 	}
 	
-	LocationTextModule GetInstance()
-	{
-		return LocationTextModule.Cast(GetModuleManager().GetModule(LocationTextModule));
-	}
-	
 	override void OnMissionStart()
 	{	
+		super.OnMissionStart();
 		m_TownEntries = EnumerateTownEntries();
-		m_LocationTimer = new Timer(CALL_CATEGORY_GAMEPLAY);
-		m_LocationTimer.Run(10.0, this, "OnLocationUpdate", null, true);
+		GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(OnLocationUpdate, 10000, true);
 	}	
 	
 	override void OnMissionFinish()
 	{
-		if (m_LocationTimer) {
-			m_LocationTimer.Stop();
-		}
+		super.OnMissionFinish();
 		
-		delete m_LocationTimer;
+		GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).Remove(OnLocationUpdate);
 		delete m_TownEntries;
 	}
 	
@@ -54,7 +46,7 @@ class LocationTextModule: JMModuleBase
 		
 	Town GetClosestTown()
 	{		
-		if (!GetGame().GetPlayer() || !IsMissionClient() || !m_TownEntries) {
+		if (!GetGame().GetPlayer() || !(GetGame().IsClient() || !GetGame().IsMultiplayer()) || !m_TownEntries) {
 			return null;
 		}
 		
@@ -101,15 +93,5 @@ class LocationTextModule: JMModuleBase
 	TTownEntries GetTownEntries()
 	{
 		return m_TownEntries;
-	}
-	
-	override bool IsClient()
-	{
-		return true;
-	}
-	
-	override bool IsServer()
-	{
-		return false;
 	}
 }
