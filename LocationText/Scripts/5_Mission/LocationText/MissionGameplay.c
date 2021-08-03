@@ -1,4 +1,4 @@
-class Testing: MissionGameplay
+modded class MissionGameplay
 {
 	protected ref LocationTextUI m_LocationTextUI;
 	protected ref TTownEntries m_TownEntries;
@@ -77,7 +77,7 @@ class Testing: MissionGameplay
 			GetGame().ConfigGetFloatArray(string.Format("%1 %2 position", cfg, city), float_array);
 			city_position[0] = float_array[0]; city_position[2] = float_array[1];
 			city_position[1] = GetGame().SurfaceY(city_position[0], city_position[2]);
-			
+				
 			if (allowed_types.Contains(GetGame().ConfigGetTextOut(string.Format("%1 %2 type", cfg, city)))) {
 				Town town_entry();
 				town_entry.Type = GetGame().ConfigGetTextOut(string.Format("%1 %2 type", cfg, city));
