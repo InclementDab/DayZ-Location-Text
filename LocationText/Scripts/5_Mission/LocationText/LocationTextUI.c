@@ -6,6 +6,18 @@ class LocationTextController: ViewController
 	string TownCoordinates;
 }
 
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+
 class LocationTextUI: ScriptViewTemplate<LocationTextController>
 {	
 	protected ref map<string, bool> m_ProtectDestroyMap = new map<string, bool>();
