@@ -21,10 +21,10 @@ modded class PlayerBase
 		delete m_LocationUpdateTimer;
 	}
 	
+	// not calling SetSyncDirty since its a really lazy call, ill let something else update it for me
 	void OnLocationUpdateTimer()
 	{
 		m_TimePlayed = StatGet(AnalyticsManagerServer.STAT_PLAYTIME) * GetGame().ServerConfigGetInt("serverTimeAcceleration");
-		SetSynchDirty();
 	}
 	
 	int GetSurvivedTime()
