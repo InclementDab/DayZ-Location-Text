@@ -6,18 +6,6 @@ class LocationTextController: ViewController
 	string TownCoordinates;
 }
 
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-
 class LocationTextUI: ScriptViewTemplate<LocationTextController>
 {	
 	protected ref map<string, bool> m_ProtectDestroyMap = new map<string, bool>();
@@ -129,12 +117,20 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 		world_name.ToLower();
 		
 		switch (world_name) {
-			case "chernarusplus": 	
+			case "chernarusplus": {
 				world_name = "chernarus";
 				break;
-			case "enoch": 			
+			}
+			
+			case "enoch": {
 				world_name = "livonia"; 
 				break;
+			}
+			
+			case "takistanplus": {
+				world_name = "takistan";
+				break;
+			}
 		}
 		
 		if (world_name[0]) {
@@ -148,10 +144,7 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 	
 	static string GetLatLong()
 	{
-		float lat = GetGame().GetWorld().GetLatitude();
-		float lon = GetGame().GetWorld().GetLongitude();
-		
-		return string.Format("%1, %2", LatLongGetFullValue(lat, "N"), LatLongGetFullValue(lon, "W"));
+		return string.Format("%1, %2", LatLongGetFullValue(GetGame().GetWorld().GetLatitude(), "N"), LatLongGetFullValue(GetGame().GetWorld().GetLongitude(), "W"));
 	}
 	
 	static string LatLongGetFullValue(float v, string nw)
