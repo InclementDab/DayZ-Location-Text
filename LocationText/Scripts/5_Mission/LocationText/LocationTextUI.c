@@ -8,6 +8,8 @@ class LocationTextController: ViewController
 
 class LocationTextUI: ScriptViewTemplate<LocationTextController>
 {	
+	static const bool CHERNO_USES_ENGLISH_NAMES = true;
+	
 	protected ref map<string, bool> m_ProtectDestroyMap = new map<string, bool>();
 	protected Town m_TownEntry;
 	protected ref Timer m_UpdateTimer = new Timer(CALL_CATEGORY_GUI);
@@ -57,8 +59,18 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 	{
 		int year, month, day, hour, minute;
 		GetGame().GetWorld().GetDate(year, month, day, hour, minute);
-				
-		m_Location = string.Format("%1, %2", m_TownEntry.Name, GetWorldName());
+		
+		string world_name;
+		GetGame().GetWorldName(world_name);
+		world_name.ToLower();
+		
+		string town_name = m_TownEntry.Name;
+		if (CHERNO_USES_ENGLISH_NAMES && world_name == "chernarusplus") {
+			town_name = m_TownEntry.Entry;
+			town_name.Replace("Settlement_", "");
+		}
+		
+		m_Location = string.Format("%1, %2", town_name, GetWorldName());
 		m_LatLong = GetLatLong();
 		m_Date = string.Format("%1/%2/%3 %4:%5", month.ToStringLen(2), day.ToStringLen(2), year.ToStringLen(2), hour.ToStringLen(2), minute.ToStringLen(2));
 		m_DaysSurvived = GetTimeString(PlayerBase.Cast(GetGame().GetPlayer()).GetSurvivedTime());
@@ -141,7 +153,7 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 		
 		return world_name;
 	}
-	
+		
 	static string GetLatLong()
 	{
 		return string.Format("%1, %2", LatLongGetFullValue(GetGame().GetWorld().GetLatitude(), "N"), LatLongGetFullValue(GetGame().GetWorld().GetLongitude(), "W"));
@@ -155,7 +167,7 @@ class LocationTextUI: ScriptViewTemplate<LocationTextController>
 		float s1 = (m1 - r2) * 60;
 		float r3 = Math.Round(s1);		
 		
-		return string.Format("%1°%2 %3'%4\"", r1, nw, r2, r3);
+		return string.Format("%1*%2 %3'%4\"", r1, nw, r2, r3); //° stupid font no supporty
 	}
 	
 	static string GetTimeString(int time_seconds)
