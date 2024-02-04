@@ -1,14 +1,16 @@
 GameProjectClass {
-	ID "DayZ"
-	TITLE "DayZ"
+	ID "LocationText"
+	TITLE "LocationText"
 	Configurations {
 		GameProjectConfigClass PC {
 			platformHardware PC
 			skeletonDefinitions "DZ/Anims/cfg/skeletons.anim.xml"
 			FileSystem {
-
+				FileSystemPathClass {
+					Name "Workdrive"
+					Directory "P:/"
+				} 
 			}
-			
 			imageSets {
 				"gui/imagesets/ccgui_enforce.imageset"
 				"gui/imagesets/rover_imageset.imageset"
@@ -24,19 +26,29 @@ GameProjectClass {
 				"gui/imagesets/playstation_buttons.imageset"
 				"gui/imagesets/selection.imageset"
 				"gui/imagesets/console_toolbar.imageset"
-				"DayZEditor/gui/imagesets/dayz_editor_gui.imageset"
+				"DabsFramework/gui/icons/brands.imageset"
+				"DabsFramework/gui/icons/duotone.imageset"
+				"DabsFramework/gui/icons/light.imageset"
+				"DabsFramework/gui/icons/regular.imageset"
+				"DabsFramework/gui/icons/sharp_light.imageset"
+				"DabsFramework/gui/icons/sharp_regular.imageset"
+				"DabsFramework/gui/icons/sharp_solid.imageset"
+				"DabsFramework/gui/icons/sharp_thin.imageset"
+				"DabsFramework/gui/icons/sharp_solid.imageset"
+				"DabsFramework/gui/icons/sharp_thin.imageset"
 			}
 			widgetStyles {
 				"gui/looknfeel/dayzwidgets.styles" 
 				"gui/looknfeel/widgets.styles"
+				"DabsFramework/gui/looknfeel/prefabs.styles"
 			}
 			ScriptModules {
 				ScriptModulePathClass {
 					Name "core"
 					Paths {
-						"scripts/1_Core"		
+						"scripts/1_Core"
 						"DabsFramework/Scripts/1_Core"
-						"LocationText/scripts/1_Core"
+						"LocationText/Scripts/1_Core"
 					}
 					EntryPoint ""
 				}
@@ -50,7 +62,7 @@ GameProjectClass {
 				ScriptModulePathClass {
 					Name "game"
 					Paths {
-						"scripts/3_Game"			
+						"scripts/3_Game"
 						"DabsFramework/Scripts/3_Game"
 						"LocationText/Scripts/3_Game"
 					}
@@ -61,7 +73,7 @@ GameProjectClass {
 					Paths {
 						"scripts/4_World"
 						"DabsFramework/Scripts/4_World"
-						"LocationText/scripts/4_World"
+						"LocationText/Scripts/4_World"
 					}
 					EntryPoint ""
 				}
@@ -70,19 +82,18 @@ GameProjectClass {
 					Paths {
 						"scripts/5_Mission"
 						"DabsFramework/Scripts/5_Mission"
-						"LocationText/scripts/5_Mission"
+						"LocationText/Scripts/5_Mission"
 					}
 					EntryPoint "CreateMission"
 				}
 				
 				ScriptModulePathClass {
-				Name "workbench"
+					Name "workbench"
 					Paths {
-						"scripts/editor/Workbench"
-						"scripts/editor/plugins"
-						"LocationText/scripts/plugins"
+						"DabsFramework/Workbench/ToolAddons"
+						"LocationText/Workbench/ToolAddons"
 					} 
-					EntryPoint ""
+					EntryPoint "CreateWorkbench"
 				} 
 			}
 		}

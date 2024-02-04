@@ -1,13 +1,28 @@
 @echo off
+SETLOCAL ENABLEDELAYEDEXPANSION
 
-cd /D "%~dp0"
-
-IF exist "P:\LocationText\" (
-	echo Removing existing link P:\LocationText
-	rmdir "P:\LocationText\"
+SET "drive=P:/"
+:check
+IF NOT EXIST %drive% (
+	SET /p "drive=Enter Drive Letter (P:/):"
+	goto check
 )
 
-echo Creating link P:\LocationText
-mklink /J "P:\LocationText\" "%cd%\LocationText\"
+REM Loop through all subdirectories in the current directory
+FOR /D %%D IN (*) DO (
+    REM Check for gproj file
+    IF EXIST "%%D/Workbench/dayz.gproj" (
+        REM Create a junction between the "Workbench" folder and P:\FolderName
+        SET "junctionPath=%drive%\%%~nxD"
+        ECHO Creating junction for "%%D" to "!junctionPath!"
+        MKLINK /J "!junctionPath!" "%%D"
+    )
+)
 
-echo Done
+for /d %%d in (Dependencies/*) do (
+    echo Creating junction for "%%d" to "%drive%/%%d"
+    mklink /j "%drive%/%%d" "%cd%/Dependencies/%%d"
+    
+)
+
+ENDLOCAL
